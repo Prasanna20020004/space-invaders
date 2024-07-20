@@ -11,11 +11,17 @@ invader_bullets = []
 
 
 def game_over():
+    if len(invader.invaders) == 0:
+        text = "You Won."
+        color = "green"
+    else:
+        text = "Game Over. You Loose."
+        color = "red"
     over = Turtle()
     over.hideturtle()
-    over.teleport(0, 150)
-    over.color("red")
-    over.write("Game Over", font=("Arial", 30, "bold"))
+    over.teleport(-100, 150)
+    over.color(color)
+    over.write(text, font=("Arial", 30, "bold"))
 
 
 def make_user_bullet():
@@ -93,5 +99,12 @@ while game_on:
             game_over()
             ship.goto(1000, 1000)
             game_on = False
+
+        for a_bullet in user_bullets:
+            if i_bullet.distance(a_bullet) < 30:
+                invader_bullets.remove(i_bullet)
+                user_bullets.remove(a_bullet)
+                i_bullet.goto(1000, 1000)
+                a_bullet.goto(1000, 1000)
 
 screen.exitonclick()
